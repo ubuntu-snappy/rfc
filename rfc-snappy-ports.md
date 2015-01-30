@@ -53,3 +53,5 @@ In this description, the port tags are:
 - `ui`: this is a special key which will also be picked up by the *webdm*.
 
 Tags are free form, but some can gain special use, such as an `external/ui` one which would be picked up by the `webdm` and used to open the *application* through the web.
+
+There's also a new key, `negotiable`, which means that if the intended port is in conflict as it has been used by another package it will allow for it to be bound to another port (there is no implementation for this yet).
