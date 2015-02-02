@@ -2,6 +2,7 @@
 
 The current (spec)[https://developer.ubuntu.com/en/snappy/guides/packaging-format-apps/] states that ports are a top level entry in the `package.yaml` as
 
+```yaml
     name: go-example-webserver
     vendor: Alexander Sack <asac@canonical.com>
     architecture: amd64
@@ -13,6 +14,7 @@ The current (spec)[https://developer.ubuntu.com/en/snappy/guides/packaging-forma
        start: ./go-example-webserver
     ports:
        required: 80
+```
 
 ## Critique
 
@@ -30,6 +32,7 @@ What this means is that ports are:
 
 With these requirements in mind, the `package.yaml` would look like:
 
+```yaml
     name: foo
     description: description for foo
     version: 1.0.1
@@ -46,6 +49,7 @@ With these requirements in mind, the `package.yaml` would look like:
                    ui:
                        port: 8080/tcp 
                        negotiable: no
+```
 
 In this description, the port tags are:
 
@@ -55,3 +59,33 @@ In this description, the port tags are:
 Tags are free form, but some can gain special use, such as an `external/ui` one which would be picked up by the `webdm` and used to open the *application* through the web.
 
 There's also a new key, `negotiable`, which means that if the intended port is in conflict as it has been used by another package it will allow for it to be bound to another port (there is no implementation for this yet).
+
+## Multiple ports, ranges of ports
+
+Multiple lists of ports can be separated by commas (preferably with no intervening whitespace), e.g.:
+
+```yaml
+          ports:
+               internal: 
+                   localcomm1:
+                       port: 3306,3307,3308/tcp
+                       negotiable: yes
+               external:
+                   ui:
+                       port: 80,8080/tcp 
+                       negotiable: no
+```
+
+Ranges of ports can be defined by separating a start port and an end port with a dash (ASCII `-`, unicode `U+002D`, unicode figure dash `U+2012` or unicode en-dash `U+2013`), e.g.:
+
+```yaml
+          ports:
+               internal: 
+                   localcomm1:
+                       port: 3306-3308/tcp
+                       negotiable: yes
+               external:
+                   ui:
+                       port: 8080-8089/tcp 
+                       negotiable: no
+```
