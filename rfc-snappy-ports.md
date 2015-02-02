@@ -1,6 +1,6 @@
 # The current situation
 
-The current (spec)[https://developer.ubuntu.com/en/snappy/guides/packaging-format-apps/] states that ports are a top level entry in the `package.yaml` as
+The current [spec](https://developer.ubuntu.com/en/snappy/guides/packaging-format-apps/) states that ports are a top level entry in the `package.yaml` as
 
 ```yaml
     name: go-example-webserver
