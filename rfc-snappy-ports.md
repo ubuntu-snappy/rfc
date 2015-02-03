@@ -68,11 +68,11 @@ Multiple lists of ports can be separated by commas (preferably with no interveni
           ports:
                internal: 
                    localcomm1:
-                       port: 3306,3307,3308/tcp
+                       port: 3306/tcp,3307/tcp,3308/udp
                        negotiable: yes
                external:
                    ui:
-                       port: 80,8080/tcp 
+                       port: 80/tcp
                        negotiable: no
 ```
 
@@ -86,6 +86,6 @@ Ranges of ports can be defined by separating a start port and an end port with a
                        negotiable: yes
                external:
                    ui:
-                       port: 8080-8089/tcp 
+                       port: 8080-8089/tcp
                        negotiable: no
 ```
