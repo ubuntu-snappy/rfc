@@ -9,8 +9,13 @@ hardware enablement.
 There can only be *one* snappy package of `type` `oem` and it can only be
 installed during image provision.
 
-TODO: define that the oem snap may setup snappy `parts` and define what a
-`part` is.
+## Nomenclature
+
+Some parts of this text refer to pure snappy packages, and `device` or
+`ubuntu-core` packages, the intent is that in the future, `device` and
+`ubuntu-core` would migrate to being pure snappy packages in the future. This
+has been generalized in some text with the concept of `parts`, in this writing
+everything is a *package*.
 
 ## Customization entry points
 
@@ -29,19 +34,21 @@ selection from the store and provision onto the system.
 
 ### Snappy package configuration
 
-Each snappy part can be configured per package or by feeding a full
-configuration with all the parts and types.
+Each snappy package can be configured independently or by feeding a full
+configuration with all packages.
 
 The `oem` package shall initially support providing a `config.yaml` describing
-each part that is to be configured.
+each package that is to be configured.
 
 On first boot of the system, this `config.yaml` file will be processed and the
 described configuration will be applied. Note: factory resetting the system
 will create a first boot scenario and therefore `config.yaml` will be
 processed.
 
-FIXME (confusing): Where possible and relevant, and specifically the
-`ubuntu-core` configuration part will feed into `cloud-init`.
+Some configuration entries are currently driven entirely by `cloud-init`,
+these are fine for a cloud enabled instance of snappy, not so much for IoT.
+The intent of the `ubuntu-core` package configuration is to wrap around
+`cloud-init` and use it where possible and relevant.
 
 ### Store ID
 
@@ -71,8 +78,8 @@ ordering for an `ubuntu-core` update and an `oem` snap update.
 #### Bootloaders
 
 Since each system boots differently, assets that are currently provided in
-`flashassets` of the device part can be provided in the `oem` snap instead.
-This is useful for systems that use the default `device` part (ie, one which
+`flashassets` of the device package can be provided in the `oem` snap instead.
+This is useful for systems that use the default `device` package (ie, one which
 uses the officially supported Ubuntu kernel and initrd).
 
 Examples of assets that may be provided via the `oem` snap are `MLO`, `u-boot`,
@@ -86,8 +93,9 @@ aren provided by the OEM.
 
 #### Description
 
-FIXME (do not use 'basically' here): This is basically what is currently provided in the `hardware.yaml` from the
-current device part sans init and kernel setup.
+FIXME (do not use 'basically' here): This is basically what is currently
+provided in the `hardware.yaml` from the current device package sans init and
+kernel setup.
 
 
 ## Structure and layout
