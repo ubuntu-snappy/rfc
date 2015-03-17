@@ -101,4 +101,29 @@ The only supported layout today is AB.
 
 ## Structure and layout
 
-TODO
+The `package.yaml` is structured as
+
+```yaml
+name: # package name
+vendor: # vendor name
+icon: # path to package icon
+version: # version string
+type: oem
+
+branding:
+    name: # brand main name
+    logo: # path to png logo
+
+store:
+    id: # store ID
+
+hardware:
+    bootloader: # bootloader to use, options are: u-boot and grub
+    partition-layout: # partition layout to use, options are: system-AB
+    dtb: # path to dtb file
+
+base-config: # path to config to be applied on first boot
+
+packages:
+    - # list of packages to preinstall
+```
