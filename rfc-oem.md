@@ -91,12 +91,13 @@ used against a running system. Caution: updating these assets on a running
 system may lead to a broken system unless redundancy or fallback machanisms
 aren provided by the OEM.
 
-#### Description
+#### Partition layout
 
-FIXME (do not use 'basically' here): This is basically what is currently
-provided in the `hardware.yaml` from the current device package sans init and
-kernel setup.
+In the current layout, the `device` package contains a file called
+`hardware.yaml`, the `partition-layout` will be migrated to the `oem` snappy 
+package to provide a more generic `device` package.
 
+The only supported layout today is AB.
 
 ## Structure and layout
 
