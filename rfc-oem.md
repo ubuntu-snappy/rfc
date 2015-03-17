@@ -89,7 +89,7 @@ system to boot.
 While these assets are typically used during provisioning, they may also be
 used against a running system. Caution: updating these assets on a running
 system may lead to a broken system unless redundancy or fallback machanisms
-aren provided by the OEM.
+aren't provided by the OEM.
 
 #### Partition layout
 
