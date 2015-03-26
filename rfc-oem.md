@@ -104,26 +104,101 @@ The only supported layout today is AB.
 The `package.yaml` is structured as
 
 ```yaml
-name: # package name
-vendor: # vendor name
-icon: # path to package icon
-version: # version string
+name: package-string
+vendor: vendor-string
+icon: icon-path
+version: version-string
 type: oem
 
-branding:
-    name: # brand main name
-    logo: # path to png logo
+config:
+    snappy-package-string:
+        property-string: property-value
 
-store:
-    id: # store ID
+inmutable-config:
+    - filer-string
 
-hardware:
-    bootloader: # bootloader to use, options are: u-boot and grub
-    partition-layout: # partition layout to use, options are: system-AB
-    dtb: # path to dtb file
+oem:
+    store:
+        id: id-string
 
-base-config: # path to config to be applied on first boot
+    branding:
+        name:  branding-name-string
+        logo: logo-path
 
-packages:
-    - # list of packages to preinstall
+    hardware:
+        platform: platform-string
+        architecture: architecture-string
+        partition-layout: partition-layout-string
+        boot-assets:
+            files:
+                - path: file-path
+            raw-files:
+                - path: file-path
+                  offset: offset-uint64
+```
+
+The package header section is common to all packages
+
+The general rules for config:
+
+- only applied on first boot.
+- if the config is immmutable, updates on in `oem` package will be reflected.
+
+Rules for removable:
+
+- removable cannot be set for `ubuntu-core`
+- removable can only be set by the oem package.
+
+Rules about packages in the config:
+
+- a package listed in this map is preinstalled on image roll out (`ubuntu-core`
+  is implicit)
+
+The `oem` part of the `package.yaml` is not a configuration per se and treated
+separately.
+
+As an example
+
+```yaml
+name: beagleboneblack.sergiusens
+vendor: Sergio Schvezov <sergiusens@gmail.com>
+icon: meta/element14.png
+version: 1.1
+type: oem
+config:
+    ubuntu-core:
+        hostname: myhostname
+        services:
+            - name: ssh
+              enabled: true
+        no-cloud: true
+    pastebinit.mvo:
+        removable: false
+    system-status.victor:
+        removable: true
+    webdm:
+        removable: false
+
+inmutable-config:
+    - ubuntu-core/services/*
+    - webdm/*
+
+oem:
+    store:
+        id: mystore
+    branding:
+        name:  Beagle Bone Black
+        logo: logo.png
+    hardware:
+        platform: am335x-boneblack
+        architecture: armhf
+        partition-layout: system-AB
+        boot-assets:
+            files:
+                - path: uEnv.txt
+            raw-files:
+                - path: MLO
+                  offset: 131072 # 128 * 1024
+                - path: u-boot.img
+                  offset: 393216 # 384 * 1024
 ```
