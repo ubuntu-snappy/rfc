@@ -104,35 +104,36 @@ The only supported layout today is AB.
 The `package.yaml` is structured as
 
 ```yaml
-name: package-string
-vendor: vendor-string
-icon: icon-path
-version: version-string
-type: oem
+name: package-string # mandatory
+vendor: vendor-string # mandatory
+icon: icon-path # mandatory
+version: version-string # mandatory
+type: oem # mandatory
 
-config:
+config: # optional
     snappy-package-string:
         property-string: property-value
 
-inmutable-config:
+inmutable-config: # optional
     - filer-string
 
 oem:
-    store:
-        id: id-string
+    store: # optional
+        id: id-string # optional
 
-    branding:
-        name:  branding-name-string
-        logo: logo-path
+    branding: # optional
+        name:  branding-name-string # optional
+        logo: logo-path # optional
 
-    hardware:
-        platform: platform-string
-        architecture: architecture-string
-        partition-layout: partition-layout-string
-        boot-assets:
-            files:
+    hardware: # mandatory
+        platform: platform-string # mandatory
+        architecture: architecture-string # mandatory (armhf, amd64, i386, arm64, ...)
+        partition-layout: partition-layout-string # mandatory (system-AB)
+        booloader: bootloader-string # mandatory (u-boot or grub)
+        boot-assets: # optional
+            files: #optional
                 - path: file-path
-            raw-files:
+            raw-files: #optional
                 - path: file-path
                   offset: offset-uint64
 ```
@@ -165,6 +166,7 @@ vendor: Sergio Schvezov <sergiusens@gmail.com>
 icon: meta/element14.png
 version: 1.1
 type: oem
+
 config:
     ubuntu-core:
         hostname: myhostname
@@ -193,6 +195,7 @@ oem:
         platform: am335x-boneblack
         architecture: armhf
         partition-layout: system-AB
+        bootloader: u-boot
         boot-assets:
             files:
                 - path: uEnv.txt
