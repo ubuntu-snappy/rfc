@@ -125,6 +125,11 @@ oem:
         name:  branding-name-string # optional
         logo: logo-path # optional
 
+    software: # optional
+        built-in:
+            - # package list
+        preinstalled:
+            - # package list
     hardware: # mandatory
         platform: platform-string # mandatory
         architecture: architecture-string # mandatory (armhf, amd64, i386, arm64, ...)
@@ -145,11 +150,6 @@ The general rules for config:
 - only applied on first boot.
 - if the config is immmutable, updates on in `oem` package will be reflected.
 
-Rules for removable:
-
-- removable cannot be set for `ubuntu-core`
-- removable can only be set by the oem package.
-
 Rules about packages in the config:
 
 - a package listed in this map is preinstalled on image roll out (`ubuntu-core`
@@ -157,6 +157,11 @@ Rules about packages in the config:
 
 The `oem` part of the `package.yaml` is not a configuration per se and treated
 separately.
+
+Rules about `software`:
+
+- `built-in` is a list of packages that cannot be removed.
+- `preinstalled` is a list of packages that are installed but can be removed.
 
 As an example
 
@@ -174,12 +179,8 @@ config:
             - name: ssh
               enabled: true
         no-cloud: true
-    pastebinit.mvo:
-        removable: false
-    system-status.victor:
-        removable: true
-    webdm:
-        removable: false
+    config-example.canonical:
+        msg: Yay!
 
 immutable-config:
     - ubuntu-core/services/*
@@ -191,6 +192,13 @@ oem:
     branding:
         name:  Beagle Bone Black
         logo: logo.png
+    software:
+        built-in:
+            - webdm
+        preinstalled:
+            - system-status.victor
+            - pastebinit.mvo
+            - config-example.canonical
     hardware:
         platform: am335x-boneblack
         architecture: armhf
