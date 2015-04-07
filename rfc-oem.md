@@ -114,7 +114,7 @@ config: # optional
     snappy-package-string:
         property-string: property-value
 
-inmutable-config: # optional
+immutable-config: # optional
     - filer-string
 
 oem:
@@ -181,7 +181,7 @@ config:
     webdm:
         removable: false
 
-inmutable-config:
+immutable-config:
     - ubuntu-core/services/*
     - webdm/*
 
