@@ -115,7 +115,7 @@ config: # optional
         property-string: property-value
 
 immutable-config: # optional
-    - filer-string
+    - filter-string
 
 oem:
     store: # optional
